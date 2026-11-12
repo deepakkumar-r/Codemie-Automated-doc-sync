@@ -177,9 +177,15 @@ public final class web {
         return result;
     }
 
-    /** Build the filtered dashboard payload; chart series are currently empty placeholders. */
+    /** Build the filtered dashboard payload, including chart series for the selected records. */
     private static String dashboard(List<Expense> selected) {
         long total = selected.stream().mapToLong(Expense::cents).sum();
+        Map<String, Long> byDay = new LinkedHashMap<>();
+        Map<String, Long> byCategory = new LinkedHashMap<>();
+        for (Expense expense : selected) {
+            byDay.merge(expense.date(), expense.cents(), Long::sum);
+            byCategory.merge(expense.category(), expense.cents(), Long::sum);
+        }
         StringBuilder out = new StringBuilder("{\"expenses\":[");
         // Serialize each filtered expense into the response array.
         for (int i = 0; i < selected.size(); i++) {
@@ -193,7 +199,21 @@ public final class web {
         for (int i = 0; i < categories.size(); i++) out.append(i == 0 ? "" : ",").append("\"").append(json(categories.get(i))).append("\"");
         // Send monetary totals as strings so JavaScript can preserve integer precision.
         out.append("],\"summary\":{\"total_cents\":\"").append(total).append("\",\"count\":").append(selected.size())
-            .append(",\"category_count\":").append(categories.size()).append(",\"by_day\":[],\"by_category\":[]}}");
+            .append(",\"category_count\":").append(categories.size()).append(",\"by_day\":[");
+        int index = 0;
+        for (Map.Entry<String, Long> entry : byDay.entrySet()) {
+            if (index++ > 0) out.append(',');
+            out.append("{\"date\":\"").append(json(entry.getKey())).append("\",\"amount_cents\":\"")
+                .append(entry.getValue()).append("\"}");
+        }
+        out.append("],\"by_category\":[");
+        index = 0;
+        for (Map.Entry<String, Long> entry : byCategory.entrySet()) {
+            if (index++ > 0) out.append(',');
+            out.append("{\"category\":\"").append(json(entry.getKey())).append("\",\"amount_cents\":\"")
+                .append(entry.getValue()).append("\"}");
+        }
+        out.append("]}}");
         return out.toString();
     }
 
