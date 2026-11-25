@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -93,6 +94,11 @@ public final class web {
     private static void handleApi(HttpExchange exchange, String path) throws IOException {
         String method = exchange.getRequestMethod();
         Matcher idMatch = ID_PATH.matcher(path);
+        // Changing requests must carry the marker header the bundled client sends (blocks simple cross-site form posts).
+        if (!"GET".equals(method) && exchange.getRequestHeaders().getFirst("X-Expense-Request") == null) {
+            send(exchange, 403, "{\"error\":\"Missing X-Expense-Request header\"}");
+            return;
+        }
         if ("GET".equals(method) && "/api/expenses".equals(path)) {
             // Apply optional month/category filters and return records in date/ID order.
             Map<String, String> query = query(exchange.getRequestURI().getRawQuery());
@@ -147,8 +153,9 @@ public final class web {
         String description = required(body, "description").trim();
         String date = body.getOrDefault("date", LocalDate.now().toString());
         // Require a valid calendar date and nonblank category/description.
-        LocalDate.parse(date);
+        checkDate(date);
         if (category.isEmpty() || description.isEmpty()) throw new IllegalArgumentException("Category and description are required");
+        checkLengths(category, description);
         return new Expense(nextId.getAndIncrement(), format(cents), cents, category, description, date);
     }
 
@@ -159,9 +166,25 @@ public final class web {
         String category = body.getOrDefault("category", old.category()).trim();
         String description = body.getOrDefault("description", old.description()).trim();
         String date = body.getOrDefault("date", old.date());
-        LocalDate.parse(date);
+        checkDate(date);
         if (category.isEmpty() || description.isEmpty()) throw new IllegalArgumentException("Fields cannot be blank");
+        checkLengths(category, description);
         return new Expense(old.id(), format(cents), cents, category, description, date);
+    }
+
+    /** Require a valid ISO calendar date; report bad input as a client error instead of a server failure. */
+    private static void checkDate(String date) {
+        try {
+            LocalDate.parse(date);
+        } catch (DateTimeParseException error) {
+            throw new IllegalArgumentException("Invalid date");
+        }
+    }
+
+    /** Enforce the same length limits as the form (category 80, description 500). */
+    private static void checkLengths(String category, String description) {
+        if (category.length() > 80) throw new IllegalArgumentException("Category must be 80 characters or fewer");
+        if (description.length() > 500) throw new IllegalArgumentException("Description must be 500 characters or fewer");
     }
 
     /** Convert a positive decimal amount into exact cents with checked arithmetic. */
