@@ -27,8 +27,9 @@ From the project root:
 ```powershell
 javac --add-modules jdk.httpserver -d .build src\web.java
 java -cp .build web
+```
 
-Open the application at:
+Open the application at http://127.0.0.1:8000/. To use a different port, pass it after `web` (for example, `java -cp .build web 8001`).
 
 Stop the server with Ctrl+C.
 

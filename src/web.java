@@ -35,13 +35,16 @@ public final class web {
 
     /** Load saved data and start the HTTP server on the local device only. */
     public static void main(String[] args) throws Exception {
+        if (args.length > 1) throw new IllegalArgumentException("Usage: java -cp .build web [port]");
+        int port = args.length == 0 ? 8000 : Integer.parseInt(args[0]);
+        if (port < 1 || port > 65535) throw new IllegalArgumentException("Port must be between 1 and 65535.");
         load();
         // Route both API requests and frontend assets through a single handler.
-        HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", 8000), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0);
         server.createContext("/", web::handle);
         server.setExecutor(Executors.newCachedThreadPool());
         server.start();
-        System.out.println("Expense Tracker: http://127.0.0.1:8000/");
+        System.out.println("Expense Tracker: http://127.0.0.1:" + port + "/");
     }
 
     /** Restore records from the local JSON file; a missing file means a fresh tracker. */
