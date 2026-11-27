@@ -8,6 +8,26 @@ let requestVersion = 0;
 let mutationPending = false;
 let opener = null;
 
+const THEME_KEY = "theme";
+
+/** @ui Read the stored theme; defaults to light and tolerates unavailable storage. */
+function storedTheme() {
+  try { return localStorage.getItem(THEME_KEY) === "dark" ? "dark" : "light"; } catch (error) { return "light"; }
+}
+
+/** @ui Apply a theme to the page and sync the toggle's label and ARIA state. */
+function applyTheme(theme, persist = false) {
+  const dark = theme === "dark";
+  document.documentElement.classList.toggle("dark-theme", dark);
+  const toggle = $("theme-toggle");
+  toggle.setAttribute("aria-pressed", String(dark));
+  toggle.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+  $("theme-toggle-icon").textContent = dark ? "☀" : "☾";
+  $("theme-toggle-text").textContent = dark ? "Light mode" : "Dark mode";
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", dark ? "#1f212b" : "#303240");
+  if (persist) { try { localStorage.setItem(THEME_KEY, theme); } catch (error) { /* Session-only when storage is unavailable. */ } }
+}
+
 /** @ui Format exact integer cents with grouping, without floating-point currency arithmetic. */
 function money(cents) {
   const value = BigInt(cents);
@@ -243,6 +263,8 @@ async function deleteExpense() {
   }
 }
 
+applyTheme(storedTheme());
+$("theme-toggle").addEventListener("click", () => applyTheme(document.documentElement.classList.contains("dark-theme") ? "light" : "dark", true));
 $("month-filter").value = localDate().slice(0, 7);
 $("add-expense").addEventListener("click", () => openEditor());
 $("empty-add").addEventListener("click", () => openEditor());

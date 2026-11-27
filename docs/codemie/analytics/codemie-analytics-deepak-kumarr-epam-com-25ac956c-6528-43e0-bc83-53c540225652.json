@@ -1,0 +1,313 @@
+{
+  "meta": {
+    "generatedAt": "2026-11-25T13:10:07.264Z",
+    "rangeLabel": "all",
+    "agents": [
+      "claude"
+    ],
+    "projectFilter": "all",
+    "totals": {
+      "sessions": 1,
+      "durationMs": 571827,
+      "turns": 9,
+      "files": 1,
+      "netLines": 0,
+      "toolCallsTotal": 7,
+      "toolSuccessRate": 85.7,
+      "totalCostUSD": 0.1750899,
+      "cacheReadCostUSD": 0.014571900000000002,
+      "pricedSessions": 1
+    },
+    "unpricedModels": [],
+    "estimatedModels": [],
+    "localModels": [],
+    "coverage": [
+      {
+        "agentName": "claude",
+        "total": 1,
+        "priced": 1,
+        "withLog": 1
+      }
+    ],
+    "userEmail": "deepak_kumarr@epam.com",
+    "periodStart": "2026-11-25T11:04:35.193Z",
+    "periodEnd": "2026-11-25T11:14:07.020Z"
+  },
+  "sessions": [
+    {
+      "sessionId": "25ac956c-6528-43e0-bc83-53c540225652",
+      "agentName": "claude",
+      "provider": "ai-run-sso",
+      "title": "@\"pr-assistant (agent)\" Review the implementation on `feature/Expense-tracker-toggle` against `main` for Jira story `EPMCDMETST-72832`. Verify the changed files, commits, requirements, and latest test execution report. Prepare a concise PR summary containing the title, description, changes, and test results. **Do not create the PR yet.** Present the summary and wait for my explicit **\"Approved\"** response. Only after approval, create the PR targeting `main` and share the PR URL.",
+      "project": "C:\\Users\\DeepakKumarR\\Desktop\\CODEMIE",
+      "branch": "feature/Expense-tracker-toggle",
+      "startTime": 1795604675193,
+      "durationMs": 571827,
+      "turns": 9,
+      "fileOps": 1,
+      "linesAdded": 0,
+      "linesRemoved": 0,
+      "linesModified": 0,
+      "netLines": 0,
+      "filesChanged": 0,
+      "filesWritten": 0,
+      "filesEdited": 0,
+      "toolCallsTotal": 7,
+      "toolCallsSuccess": 6,
+      "toolCallsFailure": 1,
+      "models": [
+        "claude-sonnet-5-5"
+      ],
+      "languages": [
+        "markdown"
+      ],
+      "tools": [
+        {
+          "toolName": "Bash",
+          "totalCalls": 4,
+          "successCount": 3,
+          "failureCount": 1,
+          "successRate": 75
+        },
+        {
+          "toolName": "Agent",
+          "totalCalls": 1,
+          "successCount": 1,
+          "failureCount": 0,
+          "successRate": 100
+        },
+        {
+          "toolName": "Read",
+          "totalCalls": 1,
+          "successCount": 1,
+          "failureCount": 0,
+          "successRate": 100
+        },
+        {
+          "toolName": "SubagentHandback",
+          "totalCalls": 1,
+          "successCount": 1,
+          "failureCount": 0,
+          "successRate": 100
+        }
+      ],
+      "tokens": {
+        "input": 22,
+        "output": 6419,
+        "cacheRead": 145719,
+        "cacheCreation": 24071,
+        "cacheCreation1h": 24071,
+        "total": 176231
+      },
+      "costUSD": 0.1750899,
+      "cacheReadCostUSD": 0.014571900000000002,
+      "perModelCost": [
+        {
+          "model": "claude-sonnet-5-5",
+          "tokens": {
+            "input": 22,
+            "output": 6419,
+            "cacheRead": 145719,
+            "cacheCreation": 24071,
+            "cacheCreation1h": 24071,
+            "total": 176231
+          },
+          "costUSD": 0.1750899,
+          "unpriced": false
+        }
+      ],
+      "hadLog": true,
+      "agentSessionFile": "C:\\Users\\DeepakKumarR\\.claude\\projects\\C--Users-DeepakKumarR-Desktop-CODEMIE\\c5cf5c13-1e83-4300-a277-77d3ea5a1fff.jsonl",
+      "costSeries": [
+        {
+          "t": 1795604768257,
+          "cost": 0.0354204,
+          "tokens": 23602
+        },
+        {
+          "t": 1795604771398,
+          "cost": 0.042575,
+          "tokens": 47725
+        },
+        {
+          "t": 1795604773075,
+          "cost": 0.055958100000000004,
+          "tokens": 53301
+        },
+        {
+          "t": 1795604776880,
+          "cost": 0.06588240000000001,
+          "tokens": 60805
+        },
+        {
+          "t": 1795604783289,
+          "cost": 0.08565080000000001,
+          "tokens": 72577
+        },
+        {
+          "t": 1795604804969,
+          "cost": 0.11260640000000002,
+          "tokens": 87206
+        },
+        {
+          "t": 1795604818745,
+          "cost": 0.14314550000000004,
+          "tokens": 115687
+        },
+        {
+          "t": 1795605052931,
+          "cost": 0.16586540000000005,
+          "tokens": 145857
+        },
+        {
+          "t": 1795605062469,
+          "cost": 0.17508990000000005,
+          "tokens": 176231
+        }
+      ],
+      "dispatches": [
+        {
+          "kind": "agent",
+          "name": "pr-assistant",
+          "start": 1795604768257,
+          "durationMs": 1434,
+          "id": "toolu_bdrk_018rbv8eD4NMh3G6uUQdetBU",
+          "ownerAgentId": "25ac956c-6528-43e0-bc83-53c540225652",
+          "agentId": "a89c20cae66daedaf",
+          "depth": 1,
+          "relationshipStatus": "resolved",
+          "acknowledgedAt": 1795604769691,
+          "observedEnd": 1795604807429,
+          "completedAt": 1795604808846,
+          "elapsedMs": 40589,
+          "status": "completed",
+          "costUSD": 0.0700314,
+          "inclusiveCostUSD": 0.0700314,
+          "attributionStatus": "exact",
+          "attributionScope": "own",
+          "tokens": {
+            "input": 8,
+            "output": 2822,
+            "cacheRead": 26874,
+            "cacheCreation": 9777,
+            "cacheCreation1h": 9777,
+            "total": 39481
+          },
+          "inclusiveTokens": {
+            "input": 8,
+            "output": 2822,
+            "cacheRead": 26874,
+            "cacheCreation": 9777,
+            "cacheCreation1h": 9777,
+            "total": 39481
+          },
+          "tools": [
+            {
+              "name": "Bash",
+              "calls": 3
+            },
+            {
+              "name": "Read",
+              "calls": 1
+            },
+            {
+              "name": "SubagentHandback",
+              "calls": 1
+            }
+          ]
+        }
+      ],
+      "costSource": "native-estimate",
+      "costBasis": "standard-api-tokens",
+      "dispatchesComplete": true,
+      "rootOwnCostUSD": 0.1050585,
+      "unlinkedCostUSD": 0,
+      "unlinkedAgentIds": [],
+      "observedEnd": 1795605247020,
+      "rootOwnTokens": {
+        "input": 14,
+        "output": 3597,
+        "cacheRead": 118845,
+        "cacheCreation": 14294,
+        "cacheCreation1h": 14294,
+        "total": 136750
+      },
+      "unlinkedTokens": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheCreation": 0,
+        "cacheCreation1h": 0,
+        "total": 0
+      },
+      "modelTimeline": [
+        {
+          "t": 1795604768257,
+          "model": "claude-sonnet-5-5",
+          "costUSD": 0.0354204,
+          "tokens": 23602
+        },
+        {
+          "t": 1795604771398,
+          "model": "claude-sonnet-5-5",
+          "costUSD": 0.0071546,
+          "tokens": 24123
+        },
+        {
+          "t": 1795604773075,
+          "model": "claude-sonnet-5-5",
+          "costUSD": 0.0133831,
+          "tokens": 5576
+        },
+        {
+          "t": 1795604776880,
+          "model": "claude-sonnet-5-5",
+          "costUSD": 0.0099243,
+          "tokens": 7504
+        },
+        {
+          "t": 1795604783289,
+          "model": "claude-sonnet-5-5",
+          "costUSD": 0.0197684,
+          "tokens": 11772
+        },
+        {
+          "t": 1795604804969,
+          "model": "claude-sonnet-5-5",
+          "costUSD": 0.0269556,
+          "tokens": 14629
+        },
+        {
+          "t": 1795604818745,
+          "model": "claude-sonnet-5-5",
+          "costUSD": 0.0305391,
+          "tokens": 28481
+        },
+        {
+          "t": 1795605052931,
+          "model": "claude-sonnet-5-5",
+          "costUSD": 0.0227199,
+          "tokens": 30170
+        },
+        {
+          "t": 1795605062469,
+          "model": "claude-sonnet-5-5",
+          "costUSD": 0.0092245,
+          "tokens": 30374
+        }
+      ],
+      "routedTurnsPct": 0,
+      "skillInvocations": [],
+      "agentInvocations": [
+        {
+          "name": "pr-assistant",
+          "totalCalls": 1,
+          "successCount": 1,
+          "failureCount": 0
+        }
+      ],
+      "commandInvocations": [],
+      "sessionSource": "Pure chat"
+    }
+  ]
+}
